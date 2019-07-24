@@ -1,10 +1,7 @@
 var mongoose = require('mongoose');
 
 mongoose.connect(
-    `mongodb+srv://
-        jimmaodamassa:<${process.env.DB_PASSWORD}>
-        @cluster0-vw1wv.mongodb.net/test
-        ?retryWrites=true&w=majority`, 
+    `mongodb://localhost:27017/cpb`, 
     {useNewUrlParser: true}
 );
 
