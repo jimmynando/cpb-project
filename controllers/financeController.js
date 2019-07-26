@@ -1,12 +1,14 @@
 const Finance = require('../models/Finance');
 
-exports.financeList = (req, res) => {
+const financeController = {}
+
+financeController.financeList = (req, res) => {
     Finance.find( (err, data) => {
         res.json(data);
     });
 }
 
-exports.financeById = (req, res) => {
+financeController.financeById = (req, res) => {
     const { idFinance } = req.params;
 
     Finance.find({'_id': idFinance}, (err, data) => {
@@ -14,7 +16,7 @@ exports.financeById = (req, res) => {
     });
 }
 
-exports.financeAdd = (req, res) => {
+financeController.financeAdd = (req, res) => {
     const { finance } = req.body;
 
     Finance.create(finance, err => {
@@ -23,7 +25,7 @@ exports.financeAdd = (req, res) => {
     }); 
 }
 
-exports.financeEdit = (req, res) => {
+financeController.financeEdit = (req, res) => {
     const { idFinance } = req.params;
     const { finance } = req.body;
 
@@ -33,7 +35,7 @@ exports.financeEdit = (req, res) => {
     });
 }
 
-exports.financeDel = (req, res) => {
+financeController.financeDel = (req, res) => {
     const { idFinance } = req.params;
     
     Finance.deleteOne({'_id': idFinance}, err => {
@@ -41,3 +43,5 @@ exports.financeDel = (req, res) => {
         return res.status(200).send("Registro removido com sucesso.");
     });
 }
+
+module.exports = financeController;
