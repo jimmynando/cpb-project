@@ -48,8 +48,17 @@ financeController.financeDel = (req, res) => {
     const { idFinance } = req.params;
     
     Finance.deleteOne({'_id': idFinance}, err => {
-        if (err) return err;
-        return res.status(200).send("Registro removido com sucesso.");
+        if (err) {
+            console.log(err);
+            return res.json({
+                status: 500,
+                message: err.message,
+            });
+        }
+        return res.json({
+            status: 200,
+            message: "Registro removido com sucesso.",
+        });
     });
 }
 
