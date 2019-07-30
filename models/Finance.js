@@ -3,7 +3,7 @@ var mongoose = require('../config/db');
 var Schema = mongoose.Schema;
 
 var financeSchema = new Schema({
-    description: {type: String, required: true},
+    description: String,
     valor: String,
     data: Date,
     category: String
