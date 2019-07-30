@@ -20,8 +20,17 @@ financeController.financeAdd = (req, res) => {
     const { finance } = req.body;
 
     Finance.create(finance, err => {
-        if (err) return err;
-        return res.status(200).send("Registro inserido com sucesso.");
+        if (err) {
+            console.log(err);
+            return res.json({
+                status: 500,
+                message: err.message,
+            });
+        }
+        return res.json({
+            status: 200,
+            message: "Registro inserido com sucesso.",
+        });
     }); 
 }
 
