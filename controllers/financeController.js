@@ -1,9 +1,12 @@
 const Finance = require('../models/Finance');
+require('dotenv').config();
+const secret = process.env.JWTTOKEN;
+const jwt = require("jsonwebtoken");
 
 const financeController = {}
 
 financeController.financeList = (req, res) => {
-    Finance.find( (err, data) => {
+    Finance.find((err, data) => {
         res.json(data);
     });
 }
@@ -11,7 +14,7 @@ financeController.financeList = (req, res) => {
 financeController.financeById = (req, res) => {
     const { idFinance } = req.params;
 
-    Finance.find({'_id': idFinance}, (err, data) => {
+    Finance.find({ '_id': idFinance }, (err, data) => {
         res.json(data);
     });
 }
@@ -31,14 +34,14 @@ financeController.financeAdd = (req, res) => {
             status: 200,
             message: "Registro inserido com sucesso.",
         });
-    }); 
+    });
 }
 
 financeController.financeEdit = (req, res) => {
     const { idFinance } = req.params;
     const { finance } = req.body;
 
-    Finance.findByIdAndUpdate(idFinance, finance, {new: true}, err => {
+    Finance.findByIdAndUpdate(idFinance, finance, { new: true }, err => {
         if (err) return err;
         return res.status(200).send("Registro alterado com sucesso.");
     });
@@ -46,8 +49,8 @@ financeController.financeEdit = (req, res) => {
 
 financeController.financeDel = (req, res) => {
     const { idFinance } = req.params;
-    
-    Finance.deleteOne({'_id': idFinance}, err => {
+
+    Finance.deleteOne({ '_id': idFinance }, err => {
         if (err) {
             console.log(err);
             return res.json({
@@ -61,5 +64,23 @@ financeController.financeDel = (req, res) => {
         });
     });
 }
+
+financeController.financeToken = (req, res) => {
+    const payload = {
+        user: {
+            id: 32132132121
+        }
+    };
+    jwt.sign(
+        payload,
+        secret,
+        { expiresIn: 360000000 },
+        (err, token) => {
+            if(err) throw err;
+            res.json({ token });
+        }
+    )
+}
+
 
 module.exports = financeController;
